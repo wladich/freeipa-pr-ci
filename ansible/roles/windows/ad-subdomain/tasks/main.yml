@@ -1,0 +1,21 @@
+- name: use AD root as DNS resolver
+  vars:
+    ad_root_ip: "hostvars['ad-root']['ansible_ip_addresses']|ipv4|first"
+  win_dns_client:
+    adapter_names: "*"
+    ipv4_addresses:
+    - '{{ ad_root_ip }}'
+
+- name: Push script to Windows machine
+  win_template:
+    src: Install-ADDSDomain.ps1.j2
+    dest: 'C:\Windows\Temp\Install-ADDSDomain.ps1'
+
+- name: Promote to Domain Controller
+  win_shell: 'C:\Windows\Temp\Install-ADDSDomain.ps1'
+  register: result
+  failed_when: '"Success" not in result.stdout or "Failed" in result.stdout or "Error" in result.stdout'
+
+- name: Restart
+  win_reboot:
+    test_command: 'dsquery user -name Administrator'

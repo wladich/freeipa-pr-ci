@@ -7,6 +7,8 @@
 
 - name: Promote to Forest Domain controller
   win_shell: 'C:\Windows\Temp\Install-ADDSForest.ps1'
+  register: result
+  failed_when: '"Success" not in result.stdout or "Failed" in result.stdout or "Error" in result.stdout'
 
 - name: Restart
   win_reboot:

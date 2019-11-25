@@ -1,0 +1,5 @@
+- include_role:
+    name: windows/ad-subdomain
+  vars:
+    domain_type: tree
+    subdomain_name: adtree.test
