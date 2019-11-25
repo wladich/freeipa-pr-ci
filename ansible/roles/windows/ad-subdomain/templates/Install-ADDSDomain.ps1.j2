@@ -1,0 +1,20 @@
+Import-Module ADDSDeployment
+
+function InstallADDomain{
+    $user = "Administrator@{{ ad_opts.ParentDomainName }}"
+    $ad_password = ConvertTo-SecureString -String "{{ ad_opts.SafeModeAdministratorPassword }}" -AsPlainText -Force
+    $admin_password = ConvertTo-SecureString -String "{{ ad_admin_password }}" -AsPlainText -Force
+    $credential = New-Object System.Management.Automation.PSCredential($user, $admin_password)
+
+    Install-ADDSDomain -Force -NoRebootOnCompletion:$true -InstallDNS:$true -Credential: $credential
+    {%- for key, value in ad_opts.items() -%}
+    {%- if key == 'SafeModeAdministratorPassword' %}
+    -{{ key }} $ad_password
+    {%- else %}
+    -{{ key }} "{{ value }}"
+    {%- endif -%}
+    {%- endfor -%}
+}
+
+InstallADDomain
+

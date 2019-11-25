@@ -26,7 +26,8 @@ domains:
 {% endfor %}
   name: ipa.test
   type: IPA
-{% if testing_ad is defined %}
+
+{% if 'ad-root' in groups['all'] %}
 - name: ad.test
   type: AD
   hosts:
@@ -37,6 +38,31 @@ domains:
       username: Administrator
       password: Secret123
 {% endif %}
+
+{% if 'ad-child' in groups['all'] %}
+- name: child.ad.test
+  type: AD_SUBDOMAIN
+  hosts:
+    - external_hostname: ad-child.child.ad.test
+      ip: {{ hostvars['ad-child']['ansible_ip_addresses']|ipv4|first }}
+      name: ad-child.child.ad.test
+      role: ad_subdomain
+      username: Administrator
+      password: Secret123
+{% endif %}
+
+{% if 'ad-tree' in groups['all'] %}
+- name: adtree.test
+  type: AD_TREEDOMAIN
+  hosts:
+    - external_hostname: ad-tree.adtree.test
+      ip: {{ hostvars['ad-tree']['ansible_ip_addresses']|ipv4|first }}
+      name: ad-tree.adtree.test
+      role: ad_treedomain
+      username: Administrator
+      password: Secret123
+{% endif %}
+
 nis_domain: ipatest
 ntp_server: 1.pool.ntp.org
 root_ssh_key_filename: /root/.ssh/freeipa_pr_ci_insecure

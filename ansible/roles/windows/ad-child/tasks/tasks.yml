@@ -1,0 +1,6 @@
+- name: setup child AD domain
+  include_role:
+    name: windows/ad-subdomain
+  vars:
+    domain_type: child
+    subdomain_name: child

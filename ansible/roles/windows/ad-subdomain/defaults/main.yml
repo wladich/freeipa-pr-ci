@@ -1,0 +1,9 @@
+domain_types:
+    child: ChildDomain
+    tree: TreeDomain
+
+ad_opts:
+    NewDomainName: "{{ subdomain_name }}"
+    ParentDomainName: ad.test
+    DomainType: "{{ domain_types[domain_type] }}"
+    SafeModeAdministratorPassword: Secret123

@@ -11,9 +11,5 @@ function InstallADForest{
     {%- endfor -%}
 }
 
-Try{
-    InstallADForest
-}Catch{
-    Write-Host "WARNING: AD Install Failed"
-}
+InstallADForest
 
