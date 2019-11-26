@@ -120,9 +120,15 @@ class VagrantBoxDownload(VagrantTask):
         # link box to libvirt
         if self.link_image and not self.box.libvirt_exists():
             try:
-                self.execute_subtask(
-                    PopenTask([
-                        'ln', self.box.vagrant_path, self.box.libvirt_path]))
+                if (os.stat(self.box.vagrant_path).st_dev ==
+                        os.stat(constants.LIBVIRT_IMAGES_DIR).st_dev):
+                    self.execute_subtask(
+                        PopenTask(['ln', self.box.vagrant_path,
+                                   self.box.libvirt_path]))
+                else:
+                    self.execute_subtask(
+                        PopenTask(['cp', self.box.vagrant_path,
+                                   self.box.libvirt_path]))
                 self.execute_subtask(
                     PopenTask([
                         'chown', 'qemu:qemu', self.box.libvirt_path]))

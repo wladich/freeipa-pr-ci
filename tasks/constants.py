@@ -25,7 +25,9 @@ FREEIPA_PRCI_REPOFILE = 'freeipa-prci.repo'
 ANSIBLE_VARS_TEMPLATE = '{action_name}.vars.yml'
 VAGRANTFILE_TEMPLATE = os.path.join('vagrantfiles', 'Vagrantfile.{vagrantfile_name}')
 VAGRANT_IMAGE_PATH = '/root/.vagrant.d/boxes/{name}/{version}/{provider}/box.img'
-LIBVIRT_IMAGE_PATH = '/var/lib/libvirt/images/{libvirt_name}_{version}.img'
+LIBVIRT_IMAGES_DIR = '/var/lib/libvirt/images/'
+LIBVIRT_IMAGE_PATH = os.path.join(LIBVIRT_IMAGES_DIR,
+                                  '{libvirt_name}_{version}.img')
 
 ANSIBLE_CFG_FILE = os.path.join(TEMPLATES_DIR, 'ansible.cfg')
 
