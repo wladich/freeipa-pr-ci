@@ -14,11 +14,14 @@
   vars:
     ansible_user: Administrator
     ansible_password: Secret123
-    role: "{{ inventory_hostname }}"
   tasks:
     - include_role: name=windows/common
-    - include_role:
-        name: "windows/{{ role }}"
+    - include_role: name=windows/ad-root
+      when: inventory_hostname == "ad-root"
+    - include_role: name=windows/ad-child
+      when: inventory_hostname == "ad-child"
+    - include_role: name=windows/ad-tree
+      when: inventory_hostname == "ad-tree"
     - include_role:
         name: windows/ipa-ad-data
         tasks_from: "{{ role }}"
