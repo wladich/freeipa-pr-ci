@@ -62,23 +62,19 @@ class VagrantUp(VagrantTask):
         self.action_name = action_name
 
     def _run(self):
-        try:
-            self.execute_subtask(
-                PopenTask(['vagrant', 'up', '--no-provision', '--parallel'],
-                          timeout=None))
-        except Exception as exc:
-            if self.action_name != 'ad':
-                raise
+        for _ in range(4):
+            try:
+                self.execute_subtask(
+                    PopenTask(['vagrant', 'up', '--no-provision', '--no-parallel'],
+                              timeout=None))
+                break
+            except Exception as exc:
+                if self.action_name != 'ad':
+                    raise
 
-            # Handle possible WinRM error: 'The device is not ready'
-            logging.debug(exc, exc_info=True)
-            logging.info("Retrying to bring the machine up.")
-            # Trying again
-            self.execute_subtask(
-                PopenTask(['vagrant', 'up', '--no-provision', '--parallel'],
-                          timeout=None))
-            logging.info("Waiting before continuing to provision.")
-            time.sleep(120)
+                # Handle possible WinRM error: 'The device is not ready'
+                logging.debug(exc, exc_info=True)
+                logging.info("Retrying to bring the machine up.")
 
 
 class VagrantProvision(VagrantTask):
