@@ -7,3 +7,9 @@
   win_shell: Install-AdcsCertificationAuthority -CAType EnterpriseRootCA -Force
   args:
     creates: C:\Windows\System32\CertSrv\CertEnroll
+  register: cert_authority
+
+- name: Reboot to finish configuring Certification Authority
+  win_reboot:
+    test_command: 'dsquery user -name Administrator'
+  when: cert_authority is changed
