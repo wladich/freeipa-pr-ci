@@ -11,5 +11,5 @@
 
 - name: Reboot to finish configuring Certification Authority
   win_reboot:
-    test_command: 'dsquery user -name Administrator'
+    test_command: 'Get-ADUser -Filter {Name -eq "Administrator"}'
   when: cert_authority is changed
