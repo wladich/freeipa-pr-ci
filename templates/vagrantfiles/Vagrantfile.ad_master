@@ -63,6 +63,7 @@ Vagrant.configure(2) do |config|
         ad_root.vm.provider "libvirt" do |domain, override|
             domain.cpus = 2
             domain.memory = 4096
+            domain.graphics_type = "vnc"
         end
     end
 
