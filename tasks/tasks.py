@@ -301,6 +301,7 @@ class RunPytest(JobTask):
             PopenTask(['vagrant', 'ssh', '-c', (
                 'IPATEST_YAML_CONFIG=/vagrant/ipa-test-config.yaml '
                 '{run_tests_cmd} {test_suite} '
+                '--log-cli-level=DEBUG '
                 '--verbose --logging-level=debug --logfile-dir=/vagrant/ '
                 '--html=/vagrant/report.html '
                 '--junit-xml=/vagrant/junit.xml'
