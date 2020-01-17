@@ -3,10 +3,10 @@
 #
 # Add the following to the topologies section of your test definitions:
 #
-# ad_root_child_tree_master_1client: &ad_root_child_tree_master_1client
-#   name: ad_root_child_tree_master_1client
+# adroot_adchild_adtree_master_1client: &adroot_adchild_adtree_master_1client
+#   name: adroot_adchild_adtree_master_1client
 #   cpu: 8
-#   memory: 16000
+#   memory: 14500
 
 Vagrant.configure(2) do |config|
 
