@@ -7,7 +7,7 @@
 
 - name: A test user with posix attributes defined
   include_role:
-    name: windows/ipa_ad_data
+    name: windows/ipa-ad-data
     tasks_from: user.yml
   vars:
     options:
@@ -21,7 +21,7 @@
 
 - name: set Subdomaintest User primary group
   include_role:
-    name: windows/ipa_ad_data
+    name: windows/ipa-ad-data
     tasks_from: primary_group.yml
   vars:
     user: treetestuser
