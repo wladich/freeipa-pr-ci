@@ -1,6 +1,6 @@
 ---
 # # Update Administrator's password
-- hosts: ad-root | ad-child | ad-tree
+- hosts: ad-root,ad-child,ad-tree
   gather_facts: no
   tasks:
     - name: set administrator password
@@ -10,7 +10,7 @@
         name: Administrator
         password: Secret123
 
-- hosts: ad-root | ad-child | ad-tree
+- hosts: ad-root,ad-child,ad-tree
   vars:
     ansible_user: Administrator
     ansible_password: Secret123
