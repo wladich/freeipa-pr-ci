@@ -64,7 +64,7 @@ class VagrantUp(VagrantTask):
     def _run(self):
         try:
             self.execute_subtask(
-                PopenTask(['vagrant', 'up', '--no-provision', '--parallel'],
+                PopenTask(['vagrant', 'up', '--no-provision', '--no-parallel'],
                           timeout=None))
         except Exception as exc:
             if self.action_name != 'ad':
@@ -75,7 +75,7 @@ class VagrantUp(VagrantTask):
             logging.info("Retrying to bring the machine up.")
             # Trying again
             self.execute_subtask(
-                PopenTask(['vagrant', 'up', '--no-provision', '--parallel'],
+                PopenTask(['vagrant', 'up', '--no-provision', '--no-parallel'],
                           timeout=None))
             logging.info("Waiting before continuing to provision.")
             time.sleep(120)
