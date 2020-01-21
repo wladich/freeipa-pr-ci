@@ -19,7 +19,8 @@
   roles:
     - windows/common
 
-- hosts: ad-root
+- name: setup AD root domain
+  hosts: ad-root
   any_errors_fatal: true
   vars:
     ansible_user: Administrator
@@ -27,7 +28,8 @@
   roles:
     - windows/ad-root
 
-- hosts: ad-child,ad-tree
+- name: setup AD child domains
+  hosts: ad-child,ad-tree
   any_errors_fatal: true
   vars:
     ansible_user: Administrator
@@ -37,7 +39,8 @@
     - include_role:
         name: "windows/{{ role }}"
 
-- hosts: ad-root,ad-child,ad-tree
+- name: create test data in AD domains
+  hosts: ad-root,ad-child,ad-tree
   any_errors_fatal: true
   vars:
     ansible_user: Administrator
