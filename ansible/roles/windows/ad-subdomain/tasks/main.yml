@@ -1,6 +1,6 @@
 - name: use AD root as DNS resolver
   vars:
-    ad_root_ip: "hostvars['ad-root'].ansible_facts.ip_addresses | ipv4 | first"
+    ad_root_ip: "{{ hostvars['ad-root'].ansible_facts.ip_addresses | ipv4 | first }}"
   win_dns_client:
     adapter_names: "*"
     ipv4_addresses:
