@@ -1,4 +1,6 @@
 ---
+- include_role: name=windows/ad-common
+
 - name: Create Windows domain
   win_domain:
     dns_domain_name: "{{ root_domain }}"

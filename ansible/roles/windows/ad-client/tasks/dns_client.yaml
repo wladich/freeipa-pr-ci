@@ -1,0 +1,4 @@
+- name: Set root DC as DNS resolver
+  win_dns_client:
+    adapter_names: "*"
+    ipv4_addresses: "{{ hostvars[ad_root_dc_hostname]['ansible_ip_addresses']|ipv4|first }}"

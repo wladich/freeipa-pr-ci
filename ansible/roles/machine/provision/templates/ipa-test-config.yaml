@@ -42,6 +42,14 @@ domains:
       role: {{ domain_type | lower }}
       username: Administrator
       password: Secret123
+{% if host + '-client' in groups['all'] %}
+    - external_hostname: {{ host }}-client.{{ domain }}
+      ip: {{ hostvars[host + '-client']['ansible_ip_addresses']|ipv4|first }}
+      name: {{ host }}-client.{{ domain }}
+      role: client
+      username: Administrator
+      password: Secret123
+{% endif %}
 {% endif %}
 {% endfor %}
 

@@ -1,6 +1,6 @@
 ---
 # # Update Administrator's password
-- hosts: ad-root,ad-child,ad-tree
+- hosts: ad-root,ad-child,ad-tree,ad-root-client
   gather_facts: no
   any_errors_fatal: true
   tasks:
@@ -11,7 +11,7 @@
         name: Administrator
         password: Secret123
 
-- hosts: ad-root,ad-child,ad-tree
+- hosts: ad-root,ad-child,ad-tree,ad-root-client
   any_errors_fatal: true
   vars:
     ansible_user: Administrator
@@ -34,6 +34,10 @@
     ansible_password: Secret123
   roles:
     - windows/ad-subdomain
+
+- hosts: ad-root-client
+  roles:
+    - windows/ad-client
 
 - hosts: ad-root
   any_errors_fatal: true
