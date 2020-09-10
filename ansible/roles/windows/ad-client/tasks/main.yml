@@ -1,0 +1,14 @@
+# We assume that we add client to AD root domain. If in the future we will need
+# to add client to other AD domains, the role should be parametrized.
+- include_tasks: dns_client.yaml
+
+- name: Enroll client to AD domain
+  win_domain_membership:
+    state: domain
+    dns_domain_name: "{{ ad_root_domain }}"
+    domain_admin_user: "Administrator@{{ ad_root_domain }}"
+    domain_admin_password: "Secret123"
+  register: domain_state
+
+- win_reboot:
+  when: domain_state.reboot_required

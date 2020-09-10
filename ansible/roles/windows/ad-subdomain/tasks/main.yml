@@ -1,7 +1,9 @@
-- name: Set root DC as DNS resolver
-  win_dns_client:
-    adapter_names: "*"
-    ipv4_addresses: "{{ hostvars[ad_root_dc_hostname]['ansible_ip_addresses']|ipv4|first }}"
+- include_role: name=windows/ad-common
+
+- name: configure DNS
+  include_role:
+    name: windows/ad-client
+    tasks_from: dns.yaml
 
 - name: check if AD domain service running
   win_service:
