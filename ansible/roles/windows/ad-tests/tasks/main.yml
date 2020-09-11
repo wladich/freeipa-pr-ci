@@ -1,0 +1,5 @@
+- name: deploy script to execute AD tests
+  copy:
+    src: ipa-run-ad-tests
+    dest: /usr/local/bin/ipa-run-ad-tests
+    mode: 0755

@@ -354,3 +354,4 @@ class RunWebuiTests(RunPytest):
 
 class RunADTests(RunPytest):
     action_name = 'ad'
+    run_tests_cmd = 'ipa-run-ad-tests'
