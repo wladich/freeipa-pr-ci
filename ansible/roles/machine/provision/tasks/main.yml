@@ -67,9 +67,6 @@
   retries: 3
   delay: 10
 
-- name: get all packages
-  shell: rpm -qa | sort > /vagrant/installed_packages/installed_packages_{{inventory_hostname}}.log
-
 - name: create hosts file from template
   template:
     src: hosts
@@ -98,3 +95,19 @@
 - include_role:
     name: utils
     tasks_from: enable_swap
+
+- when: post_setup_script is defined and post_setup_script
+  block:
+    - name: custom post-setup script
+      debug:
+        var: post_setup_script
+    - name: run custom post-setup script
+      shell: "{{ post_setup_script }}"
+      register: post_setup_script_result
+    - name: custom post-setup script output
+      debug:
+        var: post_setup_script_result.stdout_lines
+
+
+- name: get all packages
+  shell: rpm -qa | sort > /vagrant/installed_packages/installed_packages_{{inventory_hostname}}.log

@@ -247,13 +247,15 @@ class RunPytest(JobTask):
 
     def __init__(self, template, build_url, test_suite, topology=None,
                  timeout=constants.RUN_PYTEST_TIMEOUT, update_packages=False,
-                 xmlrpc=False, selinux_enforcing=False, **kwargs):
+                 xmlrpc=False, selinux_enforcing=False, post_setup_script=None,
+                 **kwargs):
         super(RunPytest, self).__init__(template, timeout=timeout, **kwargs)
         self.build_url = build_url + '/'
         self.test_suite = test_suite
         self.update_packages = update_packages
         self.selinux_enforcing = selinux_enforcing
         self.xmlrpc = xmlrpc
+        self.post_setup_script = post_setup_script
 
         if not topology:
             topology = {'name': constants.DEFAULT_TOPOLOGY}
@@ -277,7 +279,8 @@ class RunPytest(JobTask):
                 dict(repofile_url=urllib.parse.urljoin(
                         self.build_url, 'rpms/freeipa-prci.repo'),
                      update_packages=self.update_packages,
-                     selinux_enforcing=self.selinux_enforcing))
+                     selinux_enforcing=self.selinux_enforcing,
+                     post_setup_script=self.post_setup_script))
         except (OSError, IOError) as exc:
             msg = "Failed to prepare test config files"
             logging.debug(exc, exc_info=True)

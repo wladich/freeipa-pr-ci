@@ -2,6 +2,7 @@
 repofile_url: {{ repofile_url }}
 update_packages: {{ update_packages }}
 selinux_enforcing: {{ selinux_enforcing }}
+post_setup_script: {{ post_setup_script or '' }}
 
 ansible_python_interpreter: /usr/bin/python3
 
