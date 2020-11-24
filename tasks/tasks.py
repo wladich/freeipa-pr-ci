@@ -45,7 +45,7 @@ class JobTask(FallibleTask):
 
     def compress_logs(self):
         self.execute_subtask(
-            GzipLogFiles(self.data_dir, raise_on_err=False))
+            GzipLogFiles(self.data_dir, raise_on_err=False, timeout=6 * 60))
 
     def write_hostname_to_file(self):
         try:
