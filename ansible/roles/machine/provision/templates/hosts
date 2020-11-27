@@ -14,4 +14,7 @@
 {% if host in groups['all'] %}
       {{ hostvars[host]['ansible_ip_addresses']|ipv4|first }} {{ host }}.{{ domain }}
 {% endif %}
+{% if host + '-client' in groups['all'] %}
+      {{ hostvars[host + '-client']['ansible_ip_addresses']|ipv4|first }} {{ host }}-client.{{ domain }}
+{% endif %}
 {% endfor %}
